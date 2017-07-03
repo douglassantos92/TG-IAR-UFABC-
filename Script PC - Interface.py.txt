@@ -1,0 +1,66 @@
+
+#Interface Trabalho de Graduação IAR UFABC 2017
+#Robótica na Universidade Federal do ABC.
+# Douglas Santos e Vinicius Mazinetti
+
+from functools import partial
+from  Tkinter import *
+import os
+import socket
+import io
+import sys
+
+
+def Raspi():
+    HOST = '172.31.53.120'  # Endereco IP do Servidor
+    PORT = 9000  # Porta que o Servidor esta
+    tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    dest = (HOST, PORT)
+    tcp.connect(dest)
+    msg = 1
+    tcp.send(msg)
+    tcp.close()
+
+def mesh():
+    os.chdir('C:\Program Files\VCG\MeshLab')
+    os.system('meshlab.exe')
+
+def ppt():
+    os.chdir('C:\Vinicius\TG\ArchOS\osm-bundler\osm-bundlerWin32')
+    os.system('ppt_gui_start.bat')
+
+def sair():
+    janela.destroy()
+
+janela=Tk()
+#Título
+janela.title("Scanner Tridimensional IAR - UFABC - 2017")
+#Cor de Fundo
+janela["bg"]='green'
+#Posição e tamanho da janela
+#LarguraXAltura Dist_Esquerda Dist_Topo
+janela.geometry("900x600+100+60")
+
+LB=Label(janela,text="Scaner tridimensional - Modo de espera", width=100)
+LB.place(x=60, y=50)
+
+Scan=Button(janela, width=70, text="Start Escaneamento",command=Raspi)
+Scan.place(x=50 ,y=200)
+Scan["bg"]='yellow'
+
+Render=Button(janela, width=70, text="Renderização via PPT",command=ppt)
+Render.place(x=50, y=270)
+Render["bg"]='yellow'
+
+Edit=Button(janela, width=70, text="Visualização no MeshLab",command=mesh)
+Edit.place(x=50, y=340)
+Edit["bg"]='yellow'
+
+
+Exit=Button(janela, width=70, text="Exit",command=sair)
+Exit.place(x=50, y=410)
+def BT_click(template):
+    print(template["text"])
+
+janela.mainloop()
+
